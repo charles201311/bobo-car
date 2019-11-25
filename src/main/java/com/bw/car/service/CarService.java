@@ -5,6 +5,7 @@ import java.util.List;
 import com.bw.car.domain.Car;
 import com.bw.car.domain.Driver;
 import com.bw.car.domain.DriverType;
+import com.github.pagehelper.PageInfo;
 
 public interface CarService {
 	/**
@@ -24,7 +25,7 @@ public interface CarService {
 	 * @return
 	 * @return: List<Car>
 	 */
-	List<Car> selects();
+	PageInfo<Car> selects(Integer page,Integer pageSize);
 
 	/**
 	 * 
@@ -33,7 +34,7 @@ public interface CarService {
 	 * @return
 	 * @return: List<Car>
 	 */
-	List<Car> selectCarsByCode(Driver driver);
+	PageInfo<Car> selectCarsByCode(Driver driver,Integer page,Integer pageSize);
 	
 	   /**
      * 

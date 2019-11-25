@@ -9,10 +9,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bw.car.domain.Car;
 import com.bw.car.domain.Driver;
 import com.bw.car.service.CarService;
+import com.github.pagehelper.PageInfo;
 /**
  * 
  * @ClassName: DriverController 
@@ -36,14 +38,15 @@ public class DriverController {
 	 * @return: String
 	 */
 	@GetMapping("cars")
-	public String cars(HttpServletRequest request) {
+	public String cars(HttpServletRequest request,@RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "3")Integer pageSize) {
 		
 		HttpSession session = request.getSession();
 		//从session获取登录到驾驶员
 		Driver driver = (Driver) session.getAttribute("driver");
 			//查看注册用户能租什么类型的车.跳转到列表
-		List<Car> cars = carService.selectCarsByCode(driver);
-		request.setAttribute("cars", cars);
+		PageInfo<Car> info = carService.selectCarsByCode(driver, page, pageSize);
+		
+		request.setAttribute("info", info);
 		return "cars";
 		
 	}

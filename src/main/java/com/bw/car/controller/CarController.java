@@ -14,12 +14,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bw.car.domain.Car;
 import com.bw.car.domain.DriverType;
 import com.bw.car.service.CarService;
+import com.github.pagehelper.PageInfo;
 /**
  * 
  * @ClassName: CarController 
@@ -96,9 +98,9 @@ public class CarController {
 	 * @return: String
 	 */
 	@GetMapping(value = {"","/","index"})
-	public String cars(Model model) {
-		List<Car> cars = carService.selects();
-		model.addAttribute("cars", cars);
+	public String cars(Model model,@RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "6")Integer pageSize) {
+		 PageInfo<Car> info = carService.selects(page, pageSize);
+		model.addAttribute("info", info);
 		return "index";
 		
 	}
